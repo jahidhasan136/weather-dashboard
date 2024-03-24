@@ -72,7 +72,7 @@ const useWeather = () => {
       message: "Finding location...",
     });
     navigator.geolocation.getCurrentPosition(function (position) {
-      fetchWeatherData(position.coords.latitude, position.coords.longitude);
+      fetchWeatherData(position.coords.longitude, position.coords.latitude);
     });
   }, []);
   return {
