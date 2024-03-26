@@ -1,11 +1,11 @@
 import { WeatherContext } from "../context";
 import { useWeather } from "../hooks";
 
-const WeatherProvider = ({ Children }) => {
+const WeatherProvider = ({ children }) => {
   const { loading, error, weatherData } = useWeather();
   return (
     <WeatherContext.Provider value={{ loading, error, weatherData }}>
-      {Children}
+      {children}
     </WeatherContext.Provider>
   );
 };

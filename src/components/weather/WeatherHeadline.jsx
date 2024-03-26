@@ -1,52 +1,58 @@
-import colud from "../../assets/icons/cloud.svg";
-import humidity from "../../assets/icons/humidity.svg";
-import tempMax from "../../assets/icons/temp-max.svg";
-import tempMin from "../../assets/icons/temp-min.svg";
-import wind from "../../assets/icons/wind.svg";
+import { useContext } from "react";
+import CloudIcon from "../../assets/cloud.svg";
+import HazeIcon from "../../assets/haze.svg";
+import SnowIcon from "../../assets/icons/snow.svg";
+import SunnyIcon from "../../assets/icons/sunny.svg";
+import pin from "../../assets/pin.svg";
+import RainIcon from "../../assets/rainy.svg";
+import ThunderIcon from "../../assets/thunder.svg";
+import { WeatherContext } from "../../context";
+import { getFormateDate } from "../../utils/dateUtil";
 
 const WeatherHeadline = () => {
+  const { weatherData } = useContext(WeatherContext);
+  const { climate, location, temperature, time } = weatherData;
+  function getWeatherIcon(climate) {
+    switch (climate) {
+      case "Rain":
+        return RainIcon;
+      case "Clouds":
+        return CloudIcon;
+      case "Snow":
+        return SnowIcon;
+      case "Clear":
+        return SunnyIcon;
+      case "Thunder":
+        return ThunderIcon;
+      case "Fog":
+        return HazeIcon;
+      case "Haze":
+        return HazeIcon;
+      case "Mist":
+        return HazeIcon;
+
+      default:
+        return SunnyIcon;
+    }
+  }
   return (
     <div>
-      <p className="text-sm lg:text-lg font-bold uppercase mb-8">
-        thunderstorm with light drizzle
+      <div className="max-md:flex items-center justify-between md:-mt-10">
+        <img src={getWeatherIcon(climate)} alt="cloud" />
+        <div className="max-md:flex items-center max-md:space-x-4">
+          <h1 className="text-[60px] lg:text-[80px] xl:text-[100px] leading-none md:mb-4">
+            {Math.round(temperature)}°
+          </h1>
+          <div className="flex items-center space-x-4 md:mb-4">
+            <img src={pin} />
+            <h2 className="text-2xl lg:text-[50px]">{location}</h2>
+          </div>
+        </div>
+      </div>
+      <p className="text-sm lg:text-lg">
+        {getFormateDate(time, "time", false)} -
+        {getFormateDate(time, "date", false)}
       </p>
-      <ul className="space-y-6 lg:space-y-6">
-        <li className="text-sm lg:text-lg flex items-center justify-between space-x-4">
-          <span>Temp max</span>
-          <div className="inline-flex space-x-4">
-            <p>19°</p>
-            <img src={tempMax} alt="temp-max" />
-          </div>
-        </li>
-        <li className="text-sm lg:text-lg flex items-center justify-between space-x-4">
-          <span>Temp min</span>
-          <div className="inline-flex space-x-4">
-            <p>19°</p>
-            <img src={tempMin} alt="temp-min" />
-          </div>
-        </li>
-        <li className="text-sm lg:text-lg flex items-center justify-between space-x-4">
-          <span>Humadity</span>
-          <div className="inline-flex space-x-4">
-            <p>58%</p>
-            <img src={humidity} alt="humidity" />
-          </div>
-        </li>
-        <li className="text-sm lg:text-lg flex items-center justify-between space-x-4">
-          <span>Cloudy</span>
-          <div className="inline-flex space-x-4">
-            <p>86%</p>
-            <img src={colud} alt="cloudy" />
-          </div>
-        </li>
-        <li className="text-sm lg:text-lg flex items-center justify-between space-x-4">
-          <span>Wind</span>
-          <div className="inline-flex space-x-4">
-            <p>5km/h</p>
-            <img src={wind} alt="wind" />
-          </div>
-        </li>
-      </ul>
     </div>
   );
 };
