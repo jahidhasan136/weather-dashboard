@@ -11,7 +11,7 @@ const Search = () => {
 
   const doSearch = useDebounce((term) => {
     const fetchedLocation = getLocationByName(term);
-    console.log(fetchedLocation);
+    // console.log(fetchedLocation);
     setSelectedLocation({ ...fetchedLocation });
   }, 500);
   function handleChange(e) {
